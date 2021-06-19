@@ -23,6 +23,10 @@ const usersCollection = db.collection('users')
 const postsCollection = db.collection('posts')
 const commentsCollection = db.collection('comments')
 const likesCollection = db.collection('likes')
+const profileCollection = db.collection('Profile')
+const dailyNutritionCollection = db.collection('daily-nutrition')
+const foodCollection = db.collection('food')
+
 
 // export utils/refs
 export {
@@ -31,5 +35,8 @@ export {
   usersCollection,
   postsCollection,
   commentsCollection,
-  likesCollection
+  likesCollection,
+  profileCollection,
+  dailyNutritionCollection,
+  foodCollection
 }

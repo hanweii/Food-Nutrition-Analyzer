@@ -34,7 +34,8 @@ fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
 const store = new Vuex.Store({
   state: {
     userProfile: {},
-    posts: []
+    posts: [],
+    birthday: {}
   },
   mutations: {
     setUserProfile(state, val) {
@@ -45,6 +46,9 @@ const store = new Vuex.Store({
     },
     setPosts(state, val) {
       state.posts = val
+    },
+    setBirthday(state, val){
+      state.birthday = val
     }
   },
   actions: {
@@ -77,9 +81,20 @@ const store = new Vuex.Store({
     async fetchUserProfile({ commit }, user) {
       // fetch user profile
       const userProfile = await fb.usersCollection.doc(user.uid).get()
+      const userId = fb.auth.currentUser.uid
+      let postsArray = []
+      const birthday1 = await fb.dailyNutritionCollection.where('userid', '==', userId).get()
+      birthday1.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        let post = doc.data()
+        post.id = doc.id
+
+        postsArray.push(post)
+      });
 
       // set user profile in state
       commit('setUserProfile', userProfile.data())
+      commit('setBirthday', postsArray)
 
       // change route to dashboard
       if (router.currentRoute.path === '/login') {

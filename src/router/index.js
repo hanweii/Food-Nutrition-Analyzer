@@ -21,6 +21,11 @@ const routes = [
     component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import( /* webpackChunkName: "login" */ '../views/Dashboard.vue')
+  },
+  {
     path: '/settings',
     name: 'settings',
     component: () => import( /* webpackChunkName: "settings" */ '../views/Settings.vue'),
@@ -42,6 +47,11 @@ const routes = [
     path: '/history',
     name: 'history',
     component: () => import( /* webpackChunkName: "login" */ '../views/History.vue')
+  },
+  {
+    path: '/record',
+    name: 'record',
+    component: () => import( /* webpackChunkName: "login" */ '../views/Record.vue')
   }
 ]
 

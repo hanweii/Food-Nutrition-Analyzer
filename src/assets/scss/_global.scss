@@ -83,7 +83,7 @@ section {
 	max-width: 1200px;
 	margin: 0 auto;
 	@media screen and (max-width: 742px) {
-		display: block;
+		display: flex;
 	}
 }
 

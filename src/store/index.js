@@ -5,7 +5,17 @@ import router from '../router/index'
 
 Vue.use(Vuex)
 
-// realtime firebase
+const calculateCalorie =(gender,weight, height, age, exercise) =>{
+  if(gender == "Male"){
+    console.log("male")
+    return ((10 * weight) + (6.25 * height) - (5 * age) + 5)*exercise
+  }else{
+    console.log("female")
+    return ((10 * weight) + (6.25 * height) - (5 * age) - 161)*exercise
+  }
+}
+
+// realtime firebase for post
 fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
   let postsArray = []
 
@@ -18,6 +28,8 @@ fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(snapshot => {
 
   store.commit('setPosts', postsArray)
 })
+
+
 
 const store = new Vuex.Store({
   state: {
@@ -46,11 +58,17 @@ const store = new Vuex.Store({
     async signup({ dispatch }, form) {
       // sign user up
       const { user } = await fb.auth.createUserWithEmailAndPassword(form.email, form.password)
-
+      
       // create user object in userCollections
       await fb.usersCollection.doc(user.uid).set({
         name: form.name,
-        title: form.title
+        gender:form.gender,
+        height:form.height,
+        weight:form.weight,
+        age:form.age,
+        exercise: form.exercise,
+        targetWeight:form.targetWeight,
+        calcorie: calculateCalorie(form.gender, form.weight, form.height, form.age, form.exercise),
       })
 
       // fetch user profile and set in state
@@ -110,29 +128,21 @@ const store = new Vuex.Store({
     },
     async updateProfile({ dispatch }, user) {
       const userId = fb.auth.currentUser.uid
+      
       // update user object
       const userRef = await fb.usersCollection.doc(userId).update({
         name: user.name,
-        title: user.title
+        gender:user.gender,
+        height:user.height,
+        weight:user.weight,
+        age:user.age,
+        exercise: user.exercise,
+        targetWeight:user.targetWeight,
+        calcorie: calculateCalorie(user.gender,user.weight, user.height,user.age, user.exercise ),
       })
+
 
       dispatch('fetchUserProfile', { uid: userId })
-
-      // update all posts by user
-      const postDocs = await fb.postsCollection.where('userId', '==', userId).get()
-      postDocs.forEach(doc => {
-        fb.postsCollection.doc(doc.id).update({
-          userName: user.name
-        })
-      })
-
-      // update all comments by user
-      const commentDocs = await fb.commentsCollection.where('userId', '==', userId).get()
-      commentDocs.forEach(doc => {
-        fb.commentsCollection.doc(doc.id).update({
-          userName: user.name
-        })
-      })
     }
   }
 })

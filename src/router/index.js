@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
 import Home from '../views/Home.vue'
 import { auth } from '../firebase'
 
@@ -21,14 +20,9 @@ const routes = [
     component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: () => import( /* webpackChunkName: "login" */ '../views/Dashboard.vue')
-  },
-  {
-    path: '/settings',
-    name: 'settings',
-    component: () => import( /* webpackChunkName: "settings" */ '../views/Settings.vue'),
+    path: '/profile',
+    name: 'profile',
+    component: () => import( /* webpackChunkName: "settings" */ '../views/Profile.vue'),
     meta: {
       requiresAuth: true
     }

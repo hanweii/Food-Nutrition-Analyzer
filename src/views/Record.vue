@@ -1,26 +1,25 @@
 <template>
-  <section id="settings">
-      <div>
-      <h1> Hey {{userProfile.name}}, Welcome Back!</h1> 
-      <h2> You have {{userProfile.calcorie}} left today</h2>
-      </div>
-    <div class="col1">
-        <h2>Breakfast</h2>    
+  <div class="record">
+    <div class="jumbotron">
+        <h1>{{userProfile.name}}, What's on your mind?</h1>
+        <p class="lead">You have {{userProfile.calcorie}} left.</p>
+        <p class="lead">We can put some quotes here to inspire people for a healthy lifestyle</p>
+        <button class="button" href="#" role="button">RECORD</button>
     </div>
-
-    <div class="col1">
-        <h2>Lunch</h2>
-    </div> 
-
-    <div class="col1">
-        <h2>Dinner</h2>
-    </div>             
-
-    <div class="col1">
-        <h2>Snack</h2>
-    </div> 
-
-  </section>
+    <div v-if="dailyNutrition.food">
+        <div v-for="item in dailyNutrition.food" :key="item.id" >
+            <div class="container">
+                <p>{{ item }}</p>
+            </div>
+        </div>
+    </div>
+    <div v-else>
+        <div class="container">
+            <p>You haven't recorded any food yet!</p>
+        </div>
+        
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,10 +32,9 @@ export default {
         }
     },
     computed:{
-        ...mapState(['userProfile'])
+        ...mapState(['userProfile', 'dailyNutrition'])
     },
     methods:{
-
     }
 }
 </script>

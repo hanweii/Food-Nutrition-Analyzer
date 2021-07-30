@@ -1,13 +1,49 @@
 <template>
-  <div>
-    <div class="sn" @click="searchName()">Search by food name</div>
-    <div class="uf" @click="upload()">Upload food picture</div>
-    <div class="vh" @click="history()">View history</div>
-  </div>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">Hello, {{userProfile.name}}!</h1>
+        <p class="lead">I am not sure what to put here. But seems like we can put something inspriational.</p>
+        
+        <hr class="my-4">
+
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Search Food By Picture</h5>
+                <a @click="upload()" class="btn "><i class="fas fa-search"></i>Search</a>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Search Food By Name</h5>
+                <a @click="searchName()" class="btn "><i class="fas fa-search"></i>Search</a>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">View History</h5>
+                <a @click="history()" class="btn "><i class="fas fa-history"></i>View</a>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+
 </template>
 
 <script>
+import { mapState } from 'vuex'
   export default {
+    computed: {
+    ...mapState(['userProfile'])
+    },
     methods: {
       searchName() {
         this.$router.push('/foodName');
@@ -21,61 +57,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-.sn {
-  position: fixed;
-  bottom: 240px;
-  right: 950px;
-  width: 300px;
-  cursor: pointer;
-  text-align: center;
-  line-height: 165px;
-  font-size: 20px;
-  width: 300px;
-  height: 180px;
-  margin: auto;
-  border: 3px solid #686867;
-  background-color: rgb(255, 255, 255);
-}
-.sn:hover{
-  background-color: rgb(180, 180, 175);
-}
-.uf {
-  position: fixed;
-  bottom: 240px;
-  right: 550px;
-  width: 300px;
-  cursor: pointer;
-  text-align: center;
-  line-height: 165px;
-  font-size: 20px;
-  width: 300px;
-  height: 180px;
-  margin: auto;
-  border: 3px solid #686867;
-  background-color: rgb(255, 255, 255);
-}
-.uf:hover{
-  background-color: rgb(180, 180, 175);
-}
-.vh {
-  position: fixed;
-  bottom: 240px;
-  right: 150px;
-  width: 300px;
-  cursor: pointer;
-  text-align: center;
-  line-height: 165px;
-  font-size: 20px;
-  width: 300px;
-  height: 180px;
-  margin: auto;
-  border: 3px solid #686867;
-  background-color: rgb(255, 255, 255);
-}
-.vh:hover{
-  background-color: rgb(180, 180, 175);
-}
-
-</style>

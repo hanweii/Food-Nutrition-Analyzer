@@ -1,0 +1,41 @@
+
+.jumbotron{
+    background-image: linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%),
+    url("../Picture/heart-healthy-foods.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    height: 100vh;
+
+    i{
+        padding-right: 10px;
+    }
+    .card{
+        border-radius: 25px;
+    }
+    .card-body{
+        color:#00915a;
+        border-radius: 25px;
+        background: #f9f9f9;
+        opacity: 0.9;
+    }
+
+    .btn{
+        color: #00915a;
+    }
+
+    .btn:hover{
+        color: #fde428;
+        transition: all 0.5s ease 0s;
+    }
+}
+
+.row{
+    margin-top: 100px;
+}
+
+

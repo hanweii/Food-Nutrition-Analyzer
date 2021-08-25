@@ -56,7 +56,6 @@ export default {
       },
       labels: ["vitaminA", "vitaminB1", "vitaminB2", "vitaminB3", "vitaminB5", "vitaminB6", "vitaminB12", "vitaminC", "vitaminD", "vitaminE", "vitaminK"],
       responsive: [{
-        breakpoint: 480,
         options: {
           chart: {
             width: 200
@@ -73,7 +72,6 @@ export default {
       },
       labels: ["calcium", "magnesium", "phosphorus", "iron", "potassium", "sodium", "zinc", "copper"],
       responsive: [{
-        breakpoint: 480,
         options: {
           chart: {
             width: 200
@@ -167,7 +165,7 @@ export default {
 .container {
   align-items: center;
   justify-content: center;
-	width: 300px;
+	width: 330px;
 	height: 600px;
 	top:0;
 	bottom: 0;

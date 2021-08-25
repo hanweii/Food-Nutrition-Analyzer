@@ -32,6 +32,9 @@ const store = new Vuex.Store({
     },
     setDailyNutrition(state, val){
       state.dailyNutrition = val
+    },
+    setBirthday(state, val){
+      state.birthday = val
     }
   },
   actions: {
@@ -66,6 +69,16 @@ const store = new Vuex.Store({
       const userProfile = await fb.usersCollection.doc(user.uid).get()
       const userId = fb.auth.currentUser.uid
 
+      let postsArray = []
+      const birthday1 = await fb.dailyNutritionCollection.where('userid', '==', userId).orderBy('date',"asc").get()
+      birthday1.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        let post = doc.data()
+        post.id = doc.id
+
+        postsArray.push(post)
+      });
+
       const getDailyNutrition = await fb.dailyNutritionCollection
       .where('userid', '==', userId)
       .where('date', '>', today)
@@ -89,6 +102,7 @@ const store = new Vuex.Store({
             
       // set user profile in state
       commit('setUserProfile', userProfile.data())
+      commit('setBirthday', postsArray)
 
       // change route to dashboard
       if (router.currentRoute.path === '/login') {

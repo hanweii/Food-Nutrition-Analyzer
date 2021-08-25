@@ -4,8 +4,13 @@ import router from './router'
 import store from './store'
 import { auth } from './firebase'
 import './assets/scss/app.scss'
+import VueSimpleAccordion from 'vue-simple-accordion';
+import 'vue-simple-accordion/dist/vue-simple-accordion.css';
 
 Vue.config.productionTip = false
+Vue.use(VueSimpleAccordion, {
+  // ... Options go here
+});
 
 let app
 auth.onAuthStateChanged(user => {
@@ -21,4 +26,3 @@ auth.onAuthStateChanged(user => {
     store.dispatch('fetchUserProfile', user)
   }
 })
-

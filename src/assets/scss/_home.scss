@@ -1,16 +1,19 @@
 
 .jumbotron{
-    background-image: linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%),
-    url("../Picture/heart-healthy-foods.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    // background-image: linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%),
+    // url("../Picture/heart-healthy-foods.png");
+    // background-repeat: no-repeat;
+    // background-position: center;
+    background-color: white;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 
     height: 100vh;
-
+    p{
+        color: #00915A;
+    }
     i{
         padding-right: 10px;
     }

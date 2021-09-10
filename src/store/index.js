@@ -7,9 +7,16 @@ import * as firebase from 'firebase/app'
 Vue.use(Vuex)
 
 // get today's date, need to fix to get local time, now everything is in UTC
-let todayString = new Date().toISOString().slice(0, 10)
-console.log(todayString)
-let today = new Date(todayString)
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+var todayStr = yyyy+"-"+mm+"-"+dd
+console.log(yyyy+"-"+mm+"-"+dd)
+
+// let todayString = new Date().toISOString().slice(0, 10)
+// console.log(todayString)
+// let today = new Date(todayString)
 
 // calculate personal BMR
 const calculateCalorie =(gender,weight, height, age, exercise) =>{
@@ -23,8 +30,7 @@ const calculateCalorie =(gender,weight, height, age, exercise) =>{
 const store = new Vuex.Store({
   state: {
     userProfile: {},
-    birthday: {},
-    dailyNutrition:{}
+    dailyNutrition:{},
   },
   mutations: {
     setUserProfile(state, val) {
@@ -33,9 +39,6 @@ const store = new Vuex.Store({
     setDailyNutrition(state, val){
       state.dailyNutrition = val
     },
-    setBirthday(state, val){
-      state.birthday = val
-    }
   },
   actions: {
     async login({ dispatch }, form) {
@@ -69,26 +72,17 @@ const store = new Vuex.Store({
       const userProfile = await fb.usersCollection.doc(user.uid).get()
       const userId = fb.auth.currentUser.uid
 
-      let postsArray = []
-      const birthday1 = await fb.dailyNutritionCollection.where('userid', '==', userId).orderBy('date',"asc").get()
-      birthday1.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
-        let post = doc.data()
-        post.id = doc.id
-
-        postsArray.push(post)
-      });
-
       const getDailyNutrition = await fb.dailyNutritionCollection
       .where('userid', '==', userId)
-      .where('date', '>', today)
+      .where('date', '==', todayStr)
       .get()
       
       if(getDailyNutrition.empty){
         const newDailyNutritionID = await fb.dailyNutritionCollection.add({
           userid: userId,
-          date: firebase.firestore.FieldValue.serverTimestamp(),
-          food:[]
+          date: todayStr,
+          food:{},
+          Calcorie: 0.
         })
         const newDailyNutrition = await fb.dailyNutritionCollection.doc(newDailyNutritionID.id).get()
         commit('setDailyNutrition', newDailyNutrition.data())
@@ -102,7 +96,6 @@ const store = new Vuex.Store({
             
       // set user profile in state
       commit('setUserProfile', userProfile.data())
-      commit('setBirthday', postsArray)
 
       // change route to dashboard
       if (router.currentRoute.path === '/login') {
@@ -135,6 +128,24 @@ const store = new Vuex.Store({
         calcorie: calculateCalorie(user.gender,user.weight, user.height,user.age, user.exercise ),
       })
 
+
+      dispatch('fetchUserProfile', { uid: userId })
+    },
+    async recordFood({dispatch}, foodItem){
+      const userId = fb.auth.currentUser.uid
+      const getDailyNutrition = await fb.dailyNutritionCollection
+      .where('userid', '==', userId)
+      .where('date', '==', todayStr)
+      .get()
+
+      getDailyNutrition.forEach(async doc => {
+        console.log(doc.id)
+        var  originalCal = doc.data()["Calcorie"]
+        const dailyNutritionRef = await fb.dailyNutritionCollection.doc(doc.id).update({
+          [`food.${foodItem.name}`]: foodItem.energy,
+          Calcorie: originalCal+foodItem.energy
+        })
+      })
 
       dispatch('fetchUserProfile', { uid: userId })
     }

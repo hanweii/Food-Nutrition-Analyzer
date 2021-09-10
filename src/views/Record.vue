@@ -2,14 +2,14 @@
   <div class="record">
     <div class="jumbotron">
         <h1>{{userProfile.name}}, What's on your mind?</h1>
-        <p class="lead">You have {{userProfile.calcorie}} left.</p>
-        <p class="lead">We can put some quotes here to inspire people for a healthy lifestyle</p>
-        <button class="button" href="#" role="button">RECORD</button>
+        <p class="lead">You have {{userProfile.calcorie - dailyNutrition.Calcorie}} left.</p>
+        <p class="lead">Happiness lies, first of all, in health.</p>
+        <button @click="search()" class="button" role="button">RECORD</button>
     </div>
     <div v-if="dailyNutrition.food">
-        <div v-for="item in dailyNutrition.food" :key="item.id" >
+        <div v-for="(item, index) in dailyNutrition.food" :key="item.id">
             <div class="container">
-                <p>{{ item }}</p>
+                <p>{{ index }} with <b>{{item}}</b> calcorie</p>
             </div>
         </div>
     </div>
@@ -35,6 +35,9 @@ export default {
         ...mapState(['userProfile', 'dailyNutrition'])
     },
     methods:{
+        search(){
+            this.$router.push('/');
+        }
     }
 }
 </script>

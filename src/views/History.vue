@@ -3,7 +3,7 @@
 
     <vsa-list >
     <!-- Here you can use v-for to loop through items  -->
-      <vsa-item  v-for="post in birthday.slice().reverse()" :key="post.id">
+      <vsa-item  v-for="post in birthday" :key="post.id">
         
         <vsa-heading >
           <h5>{{ post.date }}</h5>

@@ -77,7 +77,7 @@ const store = new Vuex.Store({
       const userId = fb.auth.currentUser.uid
 
       let postsArray = []
-      const birthday1 = await fb.dailyNutritionCollection.where('userid', '==', userId).orderBy('timestamp').get()
+      const birthday1 = await fb.dailyNutritionCollection.where('userid', '==', userId).orderBy('timestamp','desc').get()
       birthday1.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
         let post = doc.data()

@@ -4,13 +4,15 @@
     <vsa-list >
     <!-- Here you can use v-for to loop through items  -->
       <vsa-item  v-for="post in birthday.slice().reverse()" :key="post.id">
+        
         <vsa-heading >
-          <h5>{{ getDate(post.date) }}</h5>
+          <h5>{{ post.date }}</h5>
         </vsa-heading>
 
-        <vsa-content style="background:#ffffff">
-          <h5 >{{ post.food[0] }}</h5>
-          <h5 >{{ post.food[1] }}</h5>
+        <vsa-content >
+          <h5 v-for="(item, index) in post.food" :key="item.id">
+          {{ index }} : {{item}} kcal
+          </h5>
         </vsa-content>
       </vsa-item>
     </vsa-list>

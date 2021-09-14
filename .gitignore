@@ -5,7 +5,7 @@ Flask
 flask-backend
 /flask-backend
 
-*.hdf5
+# *.hdf5
 # local env files
 .env.local
 .env.*.local
